@@ -333,10 +333,10 @@ static const str_map effects[] = {
     { CameraParameters::EFFECT_NEGATIVE,   CAMERA_EFFECT_NEGATIVE },
     { CameraParameters::EFFECT_SOLARIZE,   CAMERA_EFFECT_SOLARIZE },
     { CameraParameters::EFFECT_SEPIA,      CAMERA_EFFECT_SEPIA },
-    { CameraParameters::EFFECT_POSTERIZE,  CAMERA_EFFECT_POSTERIZE },
-    { CameraParameters::EFFECT_WHITEBOARD, CAMERA_EFFECT_WHITEBOARD },
-    { CameraParameters::EFFECT_BLACKBOARD, CAMERA_EFFECT_BLACKBOARD },
-    { CameraParameters::EFFECT_AQUA,       CAMERA_EFFECT_AQUA }
+//  { CameraParameters::EFFECT_POSTERIZE,  CAMERA_EFFECT_POSTERIZE },
+//  { CameraParameters::EFFECT_WHITEBOARD, CAMERA_EFFECT_WHITEBOARD },
+//  { CameraParameters::EFFECT_BLACKBOARD, CAMERA_EFFECT_BLACKBOARD },
+//  { CameraParameters::EFFECT_AQUA,       CAMERA_EFFECT_AQUA }
 };
 
 // from qcamera/common/camera.h
@@ -563,20 +563,20 @@ static struct country_map country_numeric[] = {
 
 static const str_map scenemode[] = {
     { CameraParameters::SCENE_MODE_AUTO,           CAMERA_BESTSHOT_OFF },
-    { CameraParameters::SCENE_MODE_ACTION,         CAMERA_BESTSHOT_ACTION },
-    { CameraParameters::SCENE_MODE_PORTRAIT,       CAMERA_BESTSHOT_PORTRAIT },
-    { CameraParameters::SCENE_MODE_LANDSCAPE,      CAMERA_BESTSHOT_LANDSCAPE },
+//  { CameraParameters::SCENE_MODE_ACTION,         CAMERA_BESTSHOT_ACTION },
+//  { CameraParameters::SCENE_MODE_PORTRAIT,       CAMERA_BESTSHOT_PORTRAIT },
+//  { CameraParameters::SCENE_MODE_LANDSCAPE,      CAMERA_BESTSHOT_LANDSCAPE },
     { CameraParameters::SCENE_MODE_NIGHT,          CAMERA_BESTSHOT_NIGHT },
-    { CameraParameters::SCENE_MODE_NIGHT_PORTRAIT, CAMERA_BESTSHOT_NIGHT_PORTRAIT },
-    { CameraParameters::SCENE_MODE_THEATRE,        CAMERA_BESTSHOT_THEATRE },
-    { CameraParameters::SCENE_MODE_BEACH,          CAMERA_BESTSHOT_BEACH },
-    { CameraParameters::SCENE_MODE_SNOW,           CAMERA_BESTSHOT_SNOW },
-    { CameraParameters::SCENE_MODE_SUNSET,         CAMERA_BESTSHOT_SUNSET },
-    { CameraParameters::SCENE_MODE_STEADYPHOTO,    CAMERA_BESTSHOT_ANTISHAKE },
-    { CameraParameters::SCENE_MODE_FIREWORKS ,     CAMERA_BESTSHOT_FIREWORKS },
-    { CameraParameters::SCENE_MODE_SPORTS ,        CAMERA_BESTSHOT_SPORTS },
-    { CameraParameters::SCENE_MODE_PARTY,          CAMERA_BESTSHOT_PARTY },
-    { CameraParameters::SCENE_MODE_CANDLELIGHT,    CAMERA_BESTSHOT_CANDLELIGHT },
+//  { CameraParameters::SCENE_MODE_NIGHT_PORTRAIT, CAMERA_BESTSHOT_NIGHT_PORTRAIT },
+//  { CameraParameters::SCENE_MODE_THEATRE,        CAMERA_BESTSHOT_THEATRE },
+//  { CameraParameters::SCENE_MODE_BEACH,          CAMERA_BESTSHOT_BEACH },
+//  { CameraParameters::SCENE_MODE_SNOW,           CAMERA_BESTSHOT_SNOW },
+//  { CameraParameters::SCENE_MODE_SUNSET,         CAMERA_BESTSHOT_SUNSET },
+//  { CameraParameters::SCENE_MODE_STEADYPHOTO,    CAMERA_BESTSHOT_ANTISHAKE },
+//  { CameraParameters::SCENE_MODE_FIREWORKS ,     CAMERA_BESTSHOT_FIREWORKS },
+//  { CameraParameters::SCENE_MODE_SPORTS ,        CAMERA_BESTSHOT_SPORTS },
+//  { CameraParameters::SCENE_MODE_PARTY,          CAMERA_BESTSHOT_PARTY },
+//  { CameraParameters::SCENE_MODE_CANDLELIGHT,    CAMERA_BESTSHOT_CANDLELIGHT },
 };
 
 #define country_number (sizeof(country_numeric) / sizeof(country_map))
@@ -644,8 +644,8 @@ static const str_map focus_modes[] = {
 };
 
 static const str_map lensshade[] = {
-    { CameraParameters::LENSSHADE_ENABLE, TRUE },
-    { CameraParameters::LENSSHADE_DISABLE, FALSE }
+//  { CameraParameters::LENSSHADE_ENABLE, TRUE },
+//  { CameraParameters::LENSSHADE_DISABLE, FALSE }
 };
 
 static const str_map continuous_af[] = {
@@ -3382,11 +3382,11 @@ status_t QualcommCameraHardware::setParameters(const CameraParameters& params)
     if ((rc = setRotation(params)))     final_rc = rc;
     if ((rc = setZoom(params)))         final_rc = rc;
     if ((rc = setOrientation(params)))  final_rc = rc;
-    if ((rc = setLensshadeValue(params)))  final_rc = rc;
+//  if ((rc = setLensshadeValue(params)))  final_rc = rc;  // 37
     if ((rc = setPictureFormat(params))) final_rc = rc;
-    if ((rc = setSharpness(params)))    final_rc = rc;
-    if ((rc = setSaturation(params)))   final_rc = rc;
-    if ((rc = setSceneMode(params)))    final_rc = rc;
+//  if ((rc = setSharpness(params)))    final_rc = rc;     // 4 
+//  if ((rc = setSaturation(params)))   final_rc = rc;     // 11
+//  if ((rc = setSceneMode(params)))    final_rc = rc;     // 27
     if ((rc = setContrast(params)))     final_rc = rc;
 
     const char *str = params.get(CameraParameters::KEY_SCENE_MODE);
@@ -3394,11 +3394,11 @@ status_t QualcommCameraHardware::setParameters(const CameraParameters& params)
 
     if((value != NOT_FOUND) && (value == CAMERA_BESTSHOT_OFF)) {
         if ((rc = setPreviewFrameRate(params))) final_rc = rc;
-        if ((rc = setAntibanding(params)))  final_rc = rc;
-        if ((rc = setAutoExposure(params))) final_rc = rc;
+//      if ((rc = setAntibanding(params)))  final_rc = rc;  // 54
+//      if ((rc = setAutoExposure(params))) final_rc = rc;  // 12
         if ((rc = setExposureCompensation(params))) final_rc = rc;
         if ((rc = setWhiteBalance(params))) final_rc = rc;
-        if ((rc = setFlash(params)))        final_rc = rc;
+//      if ((rc = setFlash(params)))        final_rc = rc;
         if ((rc = setFocusMode(params)))    final_rc = rc;
         if ((rc = setBrightness(params)))   final_rc = rc;
         if ((rc = setISOValue(params)))  final_rc = rc;
