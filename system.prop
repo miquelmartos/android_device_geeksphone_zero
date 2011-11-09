@@ -28,3 +28,6 @@ dalvik.vm.dexopt-data-only=1
 
 # Respect ALS setting, turn it off if not in use
 ro.hardware.respect_als=true
+
+# Raise heap size
+dalvik.vm.heapsize=32m
