@@ -1258,7 +1258,7 @@ void QualcommCameraHardware::initDefaultParameters()
     mParameters.set("luma-adaptation", "3");
     mParameters.set("zoom-supported", "true");
     mParameters.set("zoom-ratios", "100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175,180,185,190,195,200");
-    mParameters.set("max-zoom", MAX_ZOOM_LEVEL);
+    mParameters.set("max-zoom", MAX_ZOOM_LEVEL-1);
     mParameters.set("zoom", 0);
     mParameters.set(CameraParameters::KEY_PICTURE_FORMAT,
                     CameraParameters::PIXEL_FORMAT_JPEG);
@@ -2944,12 +2944,14 @@ void QualcommCameraHardware::stopPreviewInternal()
 {
     LOGV("stopPreviewInternal E: %d", mCameraRunning);
     if (mCameraRunning) {
+#if 0
         // Cancel auto focus.
         {
             if (mNotifyCallback && (mMsgEnabled & CAMERA_MSG_FOCUS)) {
                 cancelAutoFocusInternal();
             }
         }
+#endif
 
         Mutex::Autolock l(&mCamframeTimeoutLock);
         {
@@ -3107,12 +3109,12 @@ status_t QualcommCameraHardware::cancelAutoFocusInternal()
         return NO_ERROR;
     }
 
-#if 0
+//#if 0
     if (mAutoFocusFd < 0) {
         LOGV("cancelAutoFocusInternal X: not in progress");
         return NO_ERROR;
     }
-#endif
+//#endif
 
     status_t rc = NO_ERROR;
     status_t err;

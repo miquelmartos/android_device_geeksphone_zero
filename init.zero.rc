@@ -20,6 +20,8 @@ on fs
    chmod 777 /data/simcom/simlog
    mkdir /data/simcom/btadd        0777 system system
    chmod 777 /data/simcom/btadd
+   mkdir /data/misc/sensors        0777 compass system
+   chmod 777 /data/misc/sensors
    #mount yaffs2 mtd@system /system rw remount
 
 #---enable keypad interrupt until boot complete
@@ -50,6 +52,12 @@ on boot
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     chmod 0770 /data/misc/wifi/cert/as
     chown dhcp dhcp /data/misc/dhcp
+    chmod 666 /dev/mot
+    chmod 666 /dev/mmc31xx
+    chmod 666 /dev/ecompass_ctrl
+    chmod 666 /dev/cm3623_ps
+    chmod 666 /dev/cm3623_als
+    mkdir /data/misc/sensors 0777 system system
 
     # Adjust socket buffer to enlarge TCP receive window for high bandwidth
     write /proc/sys/net/ipv4/tcp_adv_win_scale  1
@@ -129,10 +137,8 @@ service dhcpcd_wlan0 /system/bin/dhcpcd -BKL wlan0
     oneshot
 
 service memsicd /system/bin/memsicd
-    user compass
     oneshot
 
 service wifi-loader /system/bin/logwrapper /system/bin/wificit.sh
     disabled
     oneshot
-

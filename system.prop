@@ -31,3 +31,7 @@ ro.hardware.respect_als=true
 
 # Raise heap size
 dalvik.vm.heapsize=32m
+
+# Delay específico del sensor de proximidad, valor por defecto = 1000, 
+# en ZERO para ahorrar un poco el consumo durante la llamada, se ha aumentado a 1500
+ro.prox.delay=1500
