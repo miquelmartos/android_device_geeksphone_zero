@@ -1258,7 +1258,7 @@ void QualcommCameraHardware::initDefaultParameters()
     mParameters.set("luma-adaptation", "3");
     mParameters.set("zoom-supported", "true");
     mParameters.set("zoom-ratios", "100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175,180,185,190,195,200");
-    mParameters.set("max-zoom", MAX_ZOOM_LEVEL-1);
+    mParameters.set("max-zoom", MAX_ZOOM_LEVEL);
     mParameters.set("zoom", 0);
     mParameters.set(CameraParameters::KEY_PICTURE_FORMAT,
                     CameraParameters::PIXEL_FORMAT_JPEG);
@@ -3664,7 +3664,29 @@ void QualcommCameraHardware::receivePreviewFrame(struct msm_frame *frame)
     common_crop_t *crop = (common_crop_t *) (frame->cropinfo);
 
     mInPreviewCallback = true;
-	if (crop->in2_w != 0 || crop->in2_h != 0) {
+    if(mUseOverlay) {
+        if(mOverlay != NULL) {
+            mOverlayLock.lock();
+            mOverlay->setFd(mPreviewHeap->mHeap->getHeapID());
+            if (crop->in2_w != 0 && crop->in2_h != 0) {
+                zoomCropInfo.x = (crop->out2_w - crop->in2_w + 1) / 2 - 1;
+                zoomCropInfo.y = (crop->out2_h - crop->in2_h + 1) / 2 - 1;
+                zoomCropInfo.w = crop->in2_w;
+                zoomCropInfo.h = crop->in2_h;
+                mOverlay->setCrop(zoomCropInfo.x, zoomCropInfo.y,
+                        zoomCropInfo.w, zoomCropInfo.h);
+            } else {
+                // Reset zoomCropInfo variables. This will ensure that
+                // stale values wont be used for postview
+                zoomCropInfo.w = crop->in2_w;
+                zoomCropInfo.h = crop->in2_h;
+            }
+            mOverlay->queueBuffer((void *)offset_addr);
+            mLastQueuedFrame = (void *)frame->buffer;
+            mOverlayLock.unlock();
+        }
+    } else {
+	if (crop->in2_w != 0 && crop->in2_h != 0) {
 	    dstOffset = (dstOffset + 1) % NUM_MORE_BUFS;
 	    offset = kPreviewBufferCount + dstOffset;
 	    ssize_t dstOffset_addr = offset * mPreviewHeap->mAlignedBufferSize;
@@ -3674,6 +3696,10 @@ void QualcommCameraHardware::receivePreviewFrame(struct msm_frame *frame)
                 offset = offset_addr / mPreviewHeap->mAlignedBufferSize;
 	    }
 	}
+        if (mCurrentTarget == TARGET_MSM7627) {
+            mLastQueuedFrame = (void *)mPreviewHeap->mBuffers[offset]->pointer();
+        }
+    }
     if (pcb != NULL && (msgEnabled & CAMERA_MSG_PREVIEW_FRAME))
         pcb(CAMERA_MSG_PREVIEW_FRAME, mPreviewHeap->mBuffers[offset],
             pdata);

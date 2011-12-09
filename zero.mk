@@ -113,6 +113,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     device/geeksphone/zero/prebuilt/dhd.ko:system/lib/modules/dhd.ko
 
+## Módulo TUN
+PRODUCT_COPY_FILES += \
+    device/geeksphone/zero/prebuilt/tun.ko:system/lib/modules/tun.ko
+
 ## FMRadio app and dependencies
 PRODUCT_COPY_FILES += \
     vendor/geeksphone/zero/proprietary/lib/libfmhal.so:system/lib/libfmhal.so \

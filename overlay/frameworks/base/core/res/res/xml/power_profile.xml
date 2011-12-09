@@ -22,13 +22,13 @@
 	<item name="bluetooth.active" >90</item>
 	<item name="bluetooth.on" >0.2</item>
 	<item name="bluetooth.at">35500</item>
-	<item name="screen.full" >110</item>
-	<item name="wifi.on" >2</item>
+	<item name="screen.full" >80</item>
+	<item name="wifi.on" >0.2</item>
 	<item name="wifi.active" >90</item>
 	<item name="wifi.scan" >200</item>
-	<item name="dsp.audio" >50</item>
+	<item name="dsp.audio" >25</item>
 	<item name="dsp.video" >50</item>
-	<item name="radio.active" >150</item>
+	<item name="radio.active" >125</item>
 	<item name="radio.scanning" >50</item>
 	<item name="battery.capacity">1150</item>
 	<item name="gps.on" >100</item>
