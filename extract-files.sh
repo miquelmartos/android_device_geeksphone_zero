@@ -24,7 +24,6 @@ bin/btwlancoex
 bin/CKPD-daemon
 bin/memsicd
 bin/wl
-bin/rild
 
 etc/firmware/yamato_pfp.fw
 etc/firmware/yamato_pm4.fw
@@ -40,11 +39,7 @@ lib/egl/libGLESv2_adreno200.so
 lib/egl/libq3dtools_adreno200.so
 
 lib/hw/lights.msm7k.so
-
 lib/hw/sensors.default.so
-
-lib/liba2dp.so
-lib/libaudioeq.so
 
 lib/libauth.so
 lib/libcm.so

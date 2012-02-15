@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2011 Ricardo Cerqueira
+ * Copyright (C) 2008 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#include <hardware_legacy/vibrator.h>
+#include "qemu.h"
 
+#include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <errno.h>
 
+#define THE_DEVICE "/dev/hcit_misc"
+
+int vibrator_exists()
+{
+    int fd;
+
+    fd = open(THE_DEVICE, O_RDWR);
+    if(fd < 0)
+        return 0;
+    close(fd);
+    return 1;
+}
+
 int sendit(int timeout_ms)
 {
-    int fd = open("/dev/hcit_misc",O_RDWR);
+   // int nwr, ret;
     int timer = timeout_ms;
     int res = 0;
+ //   char value[20];
 
+    int fd = open(THE_DEVICE, O_RDWR);
+    if(fd < 0)
+        return errno;
+    
     if (timeout_ms <= 0) {
         /* HCIT_IOCTL_VIB_OFF */
         res = ioctl(fd,0x400468a3,NULL);
@@ -31,6 +52,11 @@ int sendit(int timeout_ms)
         /* HCIT_IOCTL_VIB_ON */
         res = ioctl(fd,0x400468a2,&timer);
     }
+
+//    nwr = sprintf(value, "%d\n", timeout_ms);
+//    ret = write(fd, value, nwr);
     close(fd);
+
+//    return (ret == nwr) ? 0 : -1;
     return ( res ? -1 : 0 );
 }

@@ -1,34 +1,40 @@
-USE_CAMERA_STUB:= false
+LOCAL_PATH:= $(call my-dir)
 
+COMMON_GLOBAL_CFLAGS += -DMISSING_EGL_EXTERNAL_IMAGE -DMISSING_GRALLOC_BUFFERS -DMISSING_EGL_PIXEL_FORMAT_YV12
+TARGET_SUPPPORTS_LIVE_WALLPAPERS_PICKER := false
+
+TARGET_SPECIFIC_HEADER_PATH += device/geeksphone/zero/include
+
+TARGET_NO_BOOTLOADER := true
+TARGET_CPU_ABI := armeabi
+TARGET_CPU_ABI2 := armeabi
+TARGET_ARCH_VARIANT := armv6-vfp
+
+#TARGET_BOARD_PLATFORM := msm7k
+TARGET_BOARD_PLATFORM := msm7x27
+
+TARGET_BOOTLOADER_BOARD_NAME := zero
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
+TARGET_DEVICE := zero
+
+#BOARD_USES_ADRENO_200 := true
 BOARD_USES_QCOM_HARDWARE := true
 BOARD_USES_QCOM_LIBS := true
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
+
 
 BOARD_WLAN_DEVICE := bcm4329
 #WIFI_DRIVER_FW_STA_PATH := "/system/etc/firmware/fw_bcm4329_apsta.bin"
 WIFI_DRIVER_MODULE_NAME     := "dhd"
 WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/dhd.ko"
 WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/firmware/fw_bcm4329.bin nvram_path=/system/etc/wifi/nvram.txt"
-## No CSCAN, no 0.6
 #WPA_SUPPLICANT_VERSION      := VER_0_6_X
 WIFI_FIRMWARE_LOADER        := wifi-loader
 
 BOARD_WPA_SUPPLICANT_DRIVER := AWEXT
+
 BOARD_USE_CAF_LIBCAMERA := true
-
-
-# inherit from the proprietary version
--include vendor/geeksphone/zero/BoardConfigVendor.mk
-
-TARGET_NO_BOOTLOADER := true
-TARGET_CPU_ABI := armeabi
-TARGET_ARCH_VARIANT := armv6-vfp
-TARGET_BOARD_PLATFORM := msm7k
-TARGET_CPU_ABI := armeabi
-TARGET_BOOTLOADER_BOARD_NAME := zero
-
-TARGET_BOARD_PLATFORM_GPU := qcom-adreno200
 
 BOARD_KERNEL_CMDLINE := mem=212M console=null androidboot.hardware=zero
 BOARD_KERNEL_BASE := 0x00200000
@@ -47,12 +53,38 @@ BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/geeksphone/zero/recovery_ui.c
 
 BOARD_NO_RGBX_8888 := true
 
+HTTP := chrome
+HTTP_ENGINE := chrome
+
+WITH_JIT := true
+ENABLE_JSC_JIT := true
+
 TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
 
 JS_ENGINE := v8
 
-TARGET_PROVIDES_LIBAUDIO := true
-TARGET_PROVIDES_LIBRIL := true
+#TARGET_PROVIDES_LIBAUDIO := ../../device/geeksphone/zero/libaudio
+
+#BOARD_USES_AUDIO_LEGACY := true
+#TARGET_PROVIDES_LIBAUDIO := true
+
+#TARGET_PROVIDES_LIBAUDIO := true
+#BOARD_USES_AUDIO_LEGACY := true
+
+#TARGET_PROVIDES_LIBRIL := ../../device/geeksphone/zero/libril
+
+BOARD_USE_USB_MASS_STORAGE_SWITCH := true
+BOARD_UMS_LUNFILE := /sys/devices/platform/usb_mass_storage/lun0/file
+TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/usb_mass_storage/lun0/file
+
+#USE_OPENGL_RENDERER := true
+TARGET_USES_C2D_COMPOSITION := false
+TARGET_USES_SF_BYPASS := false
+TARGET_HAVE_BYPASS := false
+TARGET_USES_OVERLAY := false
+TARGET_QCOM_HDMI_OUT := false
+TARGET_GRALLOC_USES_ASHMEM := false
+TARGET_USES_GENLOCK := true
 
 # to enable the GPS HAL
 BOARD_USES_QCOM_LIBRPC := true
@@ -60,14 +92,19 @@ BOARD_USES_QCOM_GPS := true
 BOARD_VENDOR_QCOM_GPS_LOC_API_HARDWARE := zero
 # AMSS version to use for GPS
 BOARD_VENDOR_QCOM_GPS_LOC_API_AMSS_VERSION := 50000
+BOARD_USE_QCOM_PMEM := true
 
 TARGET_OTA_ASSERT_DEVICE := zero
 TARGET_USES_OLD_LIBSENSORS_HAL:=true
 
 BOARD_HAVE_FM_RADIO := true
 BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
-BOARD_USE_BROADCOM_FM_VOLUME_HACK := true
+#BOARD_USE_BROADCOM_FM_VOLUME_HACK := true
 
 BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/geeksphone/zero/vibrator.c
-
 TARGET_PROXIMITY_SENSOR_LIMIT := 3
+#WITH_DEXPREOPT := false
+#BOARD_EGL_CFG := device/geeksphone/zero/egl.cfg
+
+# inherit from the proprietary version
+-include vendor/geeksphone/zero/BoardConfigVendor.mk
