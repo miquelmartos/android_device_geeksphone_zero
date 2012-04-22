@@ -80,8 +80,8 @@ PRODUCT_COPY_FILES += \
 
 ## Firmware
 PRODUCT_COPY_FILES += \
-    vendor/geeksphone/zero/proprietary/etc/sdio.bin:vendor/firmware/fw_bcm4329_apsta.bin \
-    vendor/geeksphone/zero/proprietary/etc/sdio_cit.bin:vendor/firmware/fw_bcm4329.bin \
+    vendor/geeksphone/zero/proprietary/etc/sdio.bin:system/vendor/firmware/fw_bcm4329_apsta.bin \
+    vendor/geeksphone/zero/proprietary/etc/sdio_cit.bin:system/vendor/firmware/fw_bcm4329.bin \
     vendor/geeksphone/zero/proprietary/etc/BCM4325D1_004.002.004.0230.0244.hcd:system/etc/BCM4325D1_004.002.004.0230.0244.hcd
 
 ## Modules
