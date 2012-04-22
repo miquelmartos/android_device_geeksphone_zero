@@ -1,17 +1,24 @@
 import init.zero.usb.rc
 
 on early-init
-	export EXTERNAL_STORAGE /mnt/sdcard
-	mkdir /mnt/sdcard 0000 system system
-	# for backwards compatibility
-	symlink /mnt/sdcard /sdcard
+    export EXTERNAL_STORAGE /mnt/sdcard
+    mkdir /mnt/sdcard 0000 system system
+    # for backwards compatibility
+    symlink /mnt/sdcard /sdcard
+    chmod 7777 /data/dalvik-cache
+    chown system system /data/dalvik-cache
 
 on early-fs
-
     mkdir /persist
     mount yaffs2 mtd@persist /persist nosuid nodev
     chown system system /persist
     chmod 0777 /persist
+
+on boot-pause
+    chown root root /system/bin/battery_charging
+    chmod 0777 /dev/misc_battery_boot
+    chmod 0777 /dev/misc_version_boot
+    exec /system/bin/battery_charging
 
 on boot
 
@@ -55,6 +62,9 @@ on boot
     mkdir /data/misc/dhcp 0770 dhcp dhcp
     chmod 0770 /data/misc/wifi/cert/as
     chown dhcp dhcp /data/misc/dhcp
+
+    mkdir /data/radio 0770 radio radio
+    chown radio radio 0770 /data/radio
 
     write /sys/devices/platform/mass_storage/lun0/file /dev/block/mmcblk0p1
     write /sys/bus/platform/drivers/msm_sdcc/msm_sdcc.1/polling 1

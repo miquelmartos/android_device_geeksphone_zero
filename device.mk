@@ -45,7 +45,3 @@ $(call inherit-product, device/geeksphone/zero/device_base.mk)
 
 $(call inherit-product-if-exists, vendor/geeksphone/zero/zero-vendor.mk)
 
-PRODUCT_PACKAGES += \
-    Stk \
-    Camera \
-    Compass

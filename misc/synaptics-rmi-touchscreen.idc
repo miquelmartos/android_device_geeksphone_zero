@@ -10,10 +10,8 @@ touch.toolSize.isSummed = 1
 
 touch.pressure.calibration = amplitude
 touch.pressure.source = default
-touch.pressure.scale = 0.001
+touch.pressure.scale = 0.01
 
-touch.size.calibration = default
+touch.size.calibration = normalized
 
 touch.orientation.calibration = none
-keyboard.layout = zero
-keyboard.builtIn =1

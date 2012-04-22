@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+/*
+** Copyright 2006, The Android Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+
+<!-- use empty string to specify no proxy or port -->
+<!-- This version must agree with that in apps/common/res/apns.xml -->
+<apns version="7">
+
+  <apn carrier="Pepephone Internet"
+       mcc="214"
+       mnc="06"
+       apn="gprs.pepephone.com"
+       type="default,supl"
+   />
+   
+  <apn carrier="Pepephone MMS"
+       mcc="214" mnc="06"
+       apn="mms.pepephone.com"
+       user="wap@wap"
+       password="wap125"
+       mmsproxy="212.073.032.010"
+       mmsport="80"
+       type="mms"
+   />
+  <apn carrier="Movistar ES" apn="movistar.es" proxy="" port="" user="MOVISTAR" password="MOVISTAR" server="" mmsc="" mmsproxy="" mmsport="" mcc="214" mnc="07" type="default,supl"/>
+  <apn carrier="Movistar ES-MMS" apn="telefonica.es" proxy="" port="" user="telefonica" password="telefonica" server="" mmsc="http://mms.movistar.com" mmsproxy="10.138.255.5" mmsport="8080" mcc="214" mnc="07" type="mms"/>
+  <apn carrier="Vodafone ES" mcc="214" mnc="01" apn="airtelwap.es" user="wap@wap" password="wap125" server="" mmsc="" type="default,supl"/>
+  <apn carrier="Vodafone ES-Internet" mcc="214" mnc="01" apn="ac.vodafone.es" user="vodafone" password="vodafone" server="" mmsc=""/>
+  <apn carrier="Vodafone ES-MMS" apn="mms.vodafone.net" proxy="" port="" user="wap@wap" password="wap125" server="" mmsc="http://mmsc.vodafone.es/servlets/mms" mmsproxy="212.73.32.10" mmsport="80" mcc="214" mnc="01" type="mms"/>
+  <apn carrier="Yoigo" mcc="214" mnc="04" apn="internet" user="" password="" server="" mmsproxy="" mmsport="" mmsc="" type="" proxy="010.008.000.036" port="8080"/>
+  <apn carrier="Yoigo MMS" mcc="214" mnc="04" apn="mms" user="" server="" password="" mmsproxy="93.209.134.141" mmsport="80" mmsc="http://mmss" type="mms" proxy="93.209.134.141" port="80"/>
+  <apn carrier="MASmovil" apn="internetmas" type="" user="" pass=""/>
+  <apn carrier="Masmovil MMS" apn="masvidamms" user="masvidamms" password="MMSmasvida" mmsproxy="172.22.188.25" mmsport="8080" mmsc="mms.orange.es" type="mms" />
+  <apn carrier="Orange Internet ES" mcc="214" mnc="03" apn="internet" user="orange" password="orange" type="default,supl"/>
+  <apn carrier="Orange World ES" mcc="214" mnc="03" apn="orangeworld" user="orange" password="orange" proxy="10.32.61.10" port="8080" type="default,supl"/>
+  <apn carrier="Orange ES-MMS" apn="orangemms" user="orange" password="orange" server="" mmsc="http://mms.orange.es" mmsproxy="172.22.188.25" mmsport="8080" mcc="214" mnc="03" type="mms"/>
+</apns>

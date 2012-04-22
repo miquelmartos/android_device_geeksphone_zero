@@ -27,11 +27,11 @@
 #ifndef ANDROID_HARDWARE_QUALCOMM_CAMERA_HARDWARE_H
 #define ANDROID_HARDWARE_QUALCOMM_CAMERA_HARDWARE_H
 
-#include <camera/CameraHardwareInterface.h>
+#include "CameraHardwareInterface.h"
 #include <binder/MemoryBase.h>
 #include <binder/MemoryHeapBase.h>
 #include <stdint.h>
-#include <ui/Overlay.h>
+#include "Overlay.h"
 
 extern "C" {
 #include <linux/android_pmem.h>
@@ -262,8 +262,7 @@ enum camera_ops {
     CAMERA_START_RECORDING,
     CAMERA_STOP_RECORDING,
     CAMERA_GET_PARM_MAXZOOM,
-//  CAMERA_GET_PARM_ZOOMRATIOS,
-    CAMERA_START_RAW_SNAPSHOT,
+    CAMERA_GET_PARM_ZOOMRATIOS,
     CAMERA_SET_PARM_LED_MODE,
     CAMERA_GET_PARM_AF_SHARPNESS,
     CAMERA_SET_MOTION_ISO,
@@ -273,6 +272,7 @@ enum camera_ops {
     CAMERA_PREPARE_SNAPSHOT,
     CAMERA_SET_FPS_MODE,
     CAMERA_SET_PARM_SCENE_MODE,
+    CAMERA_START_RAW_SNAPSHOT,
 };
 
 typedef enum {
@@ -389,7 +389,7 @@ public:
     void receiveJpegPicture(void);
     void jpeg_set_location();
     void receiveJpegPictureFragment(uint8_t *buf, uint32_t size);
-    void notifyShutter(common_crop_t *crop, bool mPlayShutterSoundOnly);
+    void notifyShutter(common_crop_t *crop);
     void receive_camframetimeout();
 
 private:
@@ -461,13 +461,11 @@ private:
         PmemPool(const char *pmem_pool,
                  int control_camera_fd, int flags, int pmem_type,
                  int buffer_size, int num_buffers,
-                 int frame_size, int cbcr_offset,
-                 int yoffset, const char *name);
+                 int frame_size,
+                 const char *name);
         virtual ~PmemPool();
         int mFd;
         int mPmemType;
-        int mCbCrOffset;
-        int myOffset;
         int mCameraControlFd;
         uint32_t mAlignedSize;
         struct pmem_region mSize;
@@ -480,7 +478,7 @@ private:
     sp<PmemPool> mDisplayHeap;
     sp<AshmemPool> mJpegHeap;
     sp<PmemPool> mRawSnapShotPmemHeap;
-    sp<AshmemPool> mRawSnapshotAshmemHeap;
+    sp<PmemPool> mPostViewHeap;
 
 
     bool startCamera();
@@ -535,14 +533,11 @@ private:
     void findSensorType();
 
     status_t setPreviewSize(const CameraParameters& params);
-    status_t setJpegThumbnailSize(const CameraParameters& params);
     status_t setPreviewFrameRate(const CameraParameters& params);
-    status_t setPreviewFrameRateMode(const CameraParameters& params);
     status_t setPictureSize(const CameraParameters& params);
     status_t setJpegQuality(const CameraParameters& params);
     status_t setAntibanding(const CameraParameters& params);
     status_t setEffect(const CameraParameters& params);
-    status_t setExposureCompensation(const CameraParameters &params);
     status_t setAutoExposure(const CameraParameters& params);
     status_t setWhiteBalance(const CameraParameters& params);
     status_t setFlash(const CameraParameters& params);
@@ -551,6 +546,7 @@ private:
     status_t setZoom(const CameraParameters& params);
     status_t setFocusMode(const CameraParameters& params);
     status_t setBrightness(const CameraParameters& params);
+    status_t setExposureCompensation(const CameraParameters& params);
     status_t setOrientation(const CameraParameters& params);
     status_t setLensshadeValue(const CameraParameters& params);
     status_t setISOValue(const CameraParameters& params);
@@ -558,11 +554,8 @@ private:
     status_t setSharpness(const CameraParameters& params);
     status_t setContrast(const CameraParameters& params);
     status_t setSaturation(const CameraParameters& params);
-    status_t setContinuousAf(const CameraParameters& params);
-    status_t setTouchAfAec(const CameraParameters& params);
-    status_t setSceneMode(const CameraParameters& params);
-
     void setGpsParameters();
+    void storePreviewFrameForPostview();
     bool isValidDimension(int w, int h);
 
     Mutex mLock;
@@ -628,10 +621,6 @@ private:
     int mDebugFps;
     int kPreviewBufferCountActual;
     int previewWidth, previewHeight;
-    bool mSnapshotDone;
-    int videoWidth, videoHeight;
-
-    int mThumbnailWidth, mThumbnailHeight;
 };
 
 }; // namespace android

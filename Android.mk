@@ -14,5 +14,5 @@
 
 
 ifeq ($(TARGET_BOOTLOADER_BOARD_NAME),zero)
-  include $(call all-named-subdir-makefiles, libcamera libcamerahal)
+include $(call all-named-subdir-makefiles, libcamera libopencorehw libaudio libril)
 endif
