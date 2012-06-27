@@ -207,14 +207,15 @@ board_property boardProperties[] = {
  */
 //sorted on column basis
 static const camera_size_type picture_sizes[] = {
-    { 2592, 1944 }, // 5MP
+//    { 2592, 1944 }, // 5MP
+    { 2560, 1920 }, // 5MP (slightly reduced)
     { 2048, 1536 }, // 3MP QXGA
-    { 1920, 1080 }, //HD1080
+    //{ 1920, 1080 }, //HD1080
     { 1600, 1200 }, // 2MP UXGA
     { 1280, 768 }, //WXGA
     { 1280, 720 }, //HD720
     { 1024, 768}, // 1MP XGA
-    { 800, 600 }, //SVGA
+//    { 800, 600 }, //SVGA
     { 800, 480 }, // WVGA
     { 640, 480 }, // VGA
     { 352, 288 }, //CIF
@@ -288,7 +289,6 @@ exif_tags_info_t exif_data[MAX_EXIF_TABLE_ENTRIES];
 static zoom_crop_info zoomCropInfo;
 static void *mLastQueuedFrame = NULL;
 #define RECORD_BUFFERS_7x30 8
-#define RECORD_BUFFERS 8
 #define RECORD_BUFFERS_8x50 8
 static int kRecordBufferCount;
 
@@ -586,8 +586,7 @@ static const str_map iso[] = {
     { CameraParameters::ISO_100,   CAMERA_ISO_100},
     { CameraParameters::ISO_200,   CAMERA_ISO_200},
     { CameraParameters::ISO_400,   CAMERA_ISO_400},
-    { CameraParameters::ISO_800,   CAMERA_ISO_800 },
-    { CameraParameters::ISO_1600,  CAMERA_ISO_1600 }
+    { CameraParameters::ISO_800,   CAMERA_ISO_800 }
 };
 
 
@@ -851,7 +850,7 @@ void *opencamerafd(void *data) {
  * data will be placed in a buffer from DstSet, and this buffer will be given
  * to surface flinger to display.
  */
-#define NUM_MORE_BUFS 2
+#define NUM_MORE_BUFS 1
 
 QualcommCameraHardware::QualcommCameraHardware()
     : mParameters(),
@@ -2214,12 +2213,12 @@ bool QualcommCameraHardware::initPreview()
         pthread_attr_init(&attr);
         pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
 
-        frame_parms.frame = frames[kPreviewBufferCount - 1];
+        frame_parms.frame = frames[kPreviewBufferCount - 2];
 
         if( mCurrentTarget == TARGET_MSM7630 || mCurrentTarget == TARGET_QSD8250 )
             frame_parms.video_frame =  recordframes[kPreviewBufferCount - 1];
         else
-            frame_parms.video_frame =  frames[kPreviewBufferCount - 1];
+            frame_parms.video_frame =  frames[kPreviewBufferCount - 2];
 
         LOGV ("initpreview before cam_frame thread carete , video frame  buffer=%lu fd=%d y_off=%d cbcr_off=%d \n",
           (unsigned long)frame_parms.video_frame.buffer, frame_parms.video_frame.fd, frame_parms.video_frame.y_off,
@@ -4644,8 +4643,6 @@ status_t QualcommCameraHardware::setOverlay(const sp<Overlay> &Overlay)
     }
     return NO_ERROR;
 }
-
-#define CAMERA_ERROR_UKNOWN 1
 
 void QualcommCameraHardware::receive_camframetimeout(void) {
     LOGV("receive_camframetimeout: E");

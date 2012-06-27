@@ -13,7 +13,8 @@ PRODUCT_PACKAGES := \
 PRODUCT_PACKAGES += \
     audio.primary.zero \
     audio_policy.zero \
-    audio.a2dp.default
+    audio.a2dp.default \
+    libaudioutils
 
 ## Video
 PRODUCT_PACKAGES += \
@@ -42,9 +43,8 @@ PRODUCT_PACKAGES += \
     Gallery2 \
     Stk \
     Camera \
-    SoundRecorder \
-    Usb
-
+    SoundRecorder
+    
 ## Misc
 PRODUCT_COPY_FILES += \
     device/geeksphone/zero/misc/init.zero.rc:root/init.zero.rc \
@@ -80,28 +80,31 @@ PRODUCT_COPY_FILES += \
 
 ## Firmware
 PRODUCT_COPY_FILES += \
-    vendor/geeksphone/zero/proprietary/etc/sdio.bin:system/vendor/firmware/fw_bcm4329_apsta.bin \
-    vendor/geeksphone/zero/proprietary/etc/sdio_cit.bin:system/vendor/firmware/fw_bcm4329.bin \
+    vendor/geeksphone/zero/proprietary/etc/sdio_cit.bin:system/etc/firmware/fw_bcm4329.bin \
+    vendor/geeksphone/zero/proprietary/etc/sdio.bin:system/etc/firmware/fw_bcm4329_apsta.bin \
     vendor/geeksphone/zero/proprietary/etc/BCM4325D1_004.002.004.0230.0244.hcd:system/etc/BCM4325D1_004.002.004.0230.0244.hcd
 
 ## Modules
 PRODUCT_COPY_FILES += \
     device/geeksphone/zero/modules/dhd.ko:system/lib/modules/dhd.ko \
-    device/geeksphone/zero/modules/tun.ko:system/lib/modules/tun.ko
+    device/geeksphone/zero/modules/tun.ko:system/lib/modules/tun.ko \
+    device/geeksphone/zero/modules/xt_quota2.ko:system/lib/modules/xt_quota2.ko \
+    device/geeksphone/zero/modules/cifs.ko:system/lib/modules/cifs.ko
 
 ## Overlays
 DEVICE_PACKAGE_OVERLAYS := device/geeksphone/zero/overlay
 
 ## Battery
-PRODUCT_COPY_FILES += \
-    device/geeksphone/zero/misc/battery_charging/charging_0.rle:system/charging_0.rle \
-    device/geeksphone/zero/misc/battery_charging/charging_1.rle:system/charging_1.rle \
-    device/geeksphone/zero/misc/battery_charging/charging_2.rle:system/charging_2.rle \
-    device/geeksphone/zero/misc/battery_charging/charging_3.rle:system/charging_3.rle \
-    device/geeksphone/zero/misc/battery_charging/charging_4.rle:system/charging_4.rle \
-    device/geeksphone/zero/misc/battery_charging/charging_5.rle:system/charging_5.rle \
-    device/geeksphone/zero/misc/battery_charging/charging_6.rle:system/charging_6.rle \
-    device/geeksphone/zero/misc/battery_charging/battery_charging:system/bin/battery_charging
+#PRODUCT_COPY_FILES += \
+#    device/geeksphone/zero/misc/battery_charging/charging_0.rle:system/charging_0.rle \
+#    device/geeksphone/zero/misc/battery_charging/charging_1.rle:system/charging_1.rle \
+#    device/geeksphone/zero/misc/battery_charging/charging_2.rle:system/charging_2.rle \
+#    device/geeksphone/zero/misc/battery_charging/charging_3.rle:system/charging_3.rle \
+#    device/geeksphone/zero/misc/battery_charging/charging_4.rle:system/charging_4.rle \
+#    device/geeksphone/zero/misc/battery_charging/charging_5.rle:system/charging_5.rle \
+#    device/geeksphone/zero/misc/battery_charging/charging_6.rle:system/charging_6.rle \
+#    device/geeksphone/zero/misc/battery_charging/charging_6.rle:system/charging_7.rle \
+#    device/geeksphone/zero/misc/battery_charging/battery_charging:system/bin/battery_charging
 
 ifeq ($(TARGET_PREBUILT_KERNEL),)
     LOCAL_KERNEL := device/geeksphone/zero/kernel

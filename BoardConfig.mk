@@ -4,8 +4,10 @@ TARGET_SPECIFIC_HEADER_PATH += device/geeksphone/zero/include
 
 # Common flags
 COMMON_GLOBAL_CFLAGS += -DFORCE_CPU_UPLOAD
-COMMON_GLOBAL_CFLAGS += -DREFRESH_RATE=59
+COMMON_GLOBAL_CFLAGS += -DREFRESH_RATE=60
+COMMON_GLOBAL_CFLAGS += -DMISSING_GRALLOC_BUFFERS
 COMMON_GLOBAL_CFLAGS += -DQCOM_HARDWARE
+
 
 # GPU rendering
 TARGET_FORCE_CPU_UPLOAD := true
@@ -13,12 +15,14 @@ USE_OPENGL_RENDERER := true
 TARGET_USES_C2D_COMPOSITION := false
 TARGET_USES_SF_BYPASS := false
 TARGET_HAVE_BYPASS := false
-TARGET_USES_OVERLAY := true
+TARGET_USES_OVERLAY := false
 TARGET_QCOM_HDMI_OUT := false
 TARGET_GRALLOC_USES_ASHMEM := false
 TARGET_USES_GENLOCK := true
 BOARD_NO_RGBX_8888 := true
 TARGET_LIBAGL_USE_GRALLOC_COPYBITS := true
+BOARD_NO_ALLOW_DEQUEUE_CURRENT_BUFFER := true
+
 BOARD_EGL_CFG := device/geeksphone/zero/misc/egl.cfg
 
 # BOARD & CPU
@@ -38,13 +42,14 @@ BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
 
 # Wlan
-BOARD_WLAN_DEVICE := bcm4329
-WIFI_DRIVER_MODULE_NAME     := "dhd"
-WIFI_DRIVER_FW_STA_PATH     := "/vendor/firmware/fw_bcm4329_apsta.bin"
-WIFI_DRIVER_MODULE_PATH     := "/system/lib/modules/dhd.ko"
-WIFI_DRIVER_MODULE_ARG      := "firmware_path=/vendor/firmware/fw_bcm4329.bin nvram_path=/system/etc/wifi/nvram.txt"
-WIFI_FIRMWARE_LOADER        := wifi-loader
 BOARD_WPA_SUPPLICANT_DRIVER := AWEXT
+BOARD_WLAN_DEVICE	:= bcm4329
+WIFI_DRIVER_MODULE_PATH	:= "/system/lib/modules/dhd.ko"
+WIFI_DRIVER_FW_PATH_STA	:= "/system/etc/firmware/fw_bcm4329.bin"
+WIFI_DRIVER_FW_PATH_AP	:= "/system/etc/firmware/fw_bcm4329_apsta.bin"
+WIFI_DRIVER_MODULE_NAME	:= "dhd"
+WIFI_FIRMWARE_LOADER	:= wifi-loader
+WIFI_DRIVER_MODULE_ARG	:= "firmware_path=/system/etc/firmware/fw_bcm4329.bin nvram_path=/system/etc/wifi/nvram.txt"
 
 # Kernel, cmdline
 TARGET_PREBUILT_KERNEL := device/geeksphone/zero/kernel
@@ -59,6 +64,9 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 0x0c800000
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 0x0c3a0000
 BOARD_FLASH_BLOCK_SIZE := 131072
 
+# Bootanimation
+TARGET_BOOTANIMATION_PRELOAD := true
+
 # Libaudio
 TARGET_PROVIDES_LIBAUDIO := true
 
@@ -71,6 +79,7 @@ BOARD_USES_QCOM_LIBS := true
 HTTP := chrome
 WITH_JIT := true
 JS_ENGINE := v8
+ENABLE_WEBGL := true
 
 # to enable the GPS HAL
 BOARD_USES_QCOM_LIBRPC := true
@@ -86,6 +95,10 @@ BOARD_HAVE_FM_RADIO := true
 BOARD_GLOBAL_CFLAGS += -DHAVE_FM_RADIO
 BOARD_USE_BROADCOM_FM_VOLUME_HACK := true
 
+# Camera
+BOARD_CAMERA_USE_GETBUFFERINFO := true
+BOARD_USE_CAF_LIBCAMERA := true
+
 # Sensors
 TARGET_USES_OLD_LIBSENSORS_HAL:=true
 TARGET_PROXIMITY_SENSOR_LIMIT := 3
@@ -94,7 +107,8 @@ TARGET_PROXIMITY_SENSOR_LIMIT := 3
 BOARD_HAS_VIBRATOR_IMPLEMENTATION := ../../device/geeksphone/zero/vibrator/vibrator.c
 
 # Ums
-TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/usb_mass_storage/lun0/file"
+#BOARD_UMS_LUNFILE := /sys/devices/platform/msm_hsusb/gadget/lun0/file
+#TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/devices/platform/usb_mass_storage/lun0/file"
 
 # Recovery
 BOARD_CUSTOM_RECOVERY_KEYMAPPING := ../../device/geeksphone/zero/recovery/recovery_ui.c
